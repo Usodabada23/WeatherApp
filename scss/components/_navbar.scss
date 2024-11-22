@@ -1,0 +1,29 @@
+@use "./variables";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav-container {
+  background-color: variables.$primary-color; 
+  padding: 10px;
+  padding-right: 12%;
+  padding-left: 12%;
+
+  &__h1 {
+    font-size: 32px;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0;
+    cursor: pointer;
+
+    span {
+      color: variables.$third-color;
+    }
+
+    &:hover {
+      color: black; 
+    }
+  }
+}

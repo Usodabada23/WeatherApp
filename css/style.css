@@ -1,0 +1,140 @@
+@import url("https://fonts.cdnfonts.com/css/satoshi");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav-container {
+  background-color: #3498db;
+  padding: 10px;
+  padding-right: 12%;
+  padding-left: 12%;
+}
+.nav-container__h1 {
+  font-size: 32px;
+  color: #ffffff;
+  font-weight: bold;
+  margin: 0;
+  cursor: pointer;
+}
+.nav-container__h1 span {
+  color: #f1c40f;
+}
+.nav-container__h1:hover {
+  color: black;
+}
+
+.footer-container {
+  background-color: #2c3e50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  padding-left: 12%;
+  padding-right: 12%;
+  color: white;
+  font-family: "Satoshi", sans-serif;
+}
+.footer-container__h6 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  cursor: pointer;
+}
+.footer-container__h6 span {
+  color: #f1c40f;
+}
+.footer-container__h6:hover {
+  color: black;
+}
+.footer-container__copyright {
+  font-size: 12px;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: "Satoshi", sans-serif;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body header {
+  flex-shrink: 0;
+}
+body main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 3rem;
+}
+body footer {
+  flex-shrink: 0;
+}
+
+.search-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: #ecf0f1;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+.search-container__h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  font-family: "Satoshi", sans-serif;
+  margin-bottom: 1rem;
+}
+.search-container__h2 span {
+  font-weight: bold;
+}
+.search-container__h2 .span1 {
+  color: #2c3e50;
+}
+.search-container__h2 .span2 {
+  color: #3498db;
+}
+.search-container__h2 .span3 {
+  color: #f1c40f;
+}
+.search-container__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.search-container__form input {
+  font-family: "Satoshi", sans-serif;
+  font-size: 14px;
+  padding: 0.5rem 1rem;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.search-container__form input:focus {
+  border-color: #f1c40f;
+}
+.search-container__form button {
+  font-family: "Satoshi", sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.search-container__form button:hover {
+  background-color: #f1c40f;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,96 @@
+@use "./variables";
+body {
+  margin: 0;
+  font-family: variables.$main-typo;
+  background-color: variables.$background-color;
+  color: variables.$text-color;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  header {
+    flex-shrink: 0;
+  }
+
+  main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 3rem;
+  }
+
+  footer {
+    flex-shrink: 0;
+  }
+}
+
+.search-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: variables.$background-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 600px;
+  margin: 1rem auto;
+  &__h2 {
+    font-size: 1.8rem;
+    color: variables.$text-color;
+    font-family: variables.$main-typo;
+    margin-bottom: 1rem;
+
+    span {
+      font-weight: bold;
+    }
+
+    .span1 {
+      color: variables.$secondary-color;
+    }
+
+    .span2 {
+      color: variables.$primary-color;
+    }
+
+    .span3 {
+      color: variables.$third-color;
+    }
+  }
+
+  &__form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    input {
+      font-family: variables.$main-typo;
+      font-size: 14px;
+      padding: 0.5rem 1rem;
+      border: 2px solid variables.$primary-color;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: variables.$third-color;
+      }
+    }
+
+    button {
+      font-family: variables.$main-typo;
+      font-size: 1rem;
+      padding: 0.5rem 1.5rem;
+      background-color: variables.$primary-color;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: variables.$third-color;
+      }
+    }
+  }
+}
