@@ -69,8 +69,9 @@ body main {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 3rem;
+  align-items: center;
+  padding: 3rem 12%;
+  gap: 2rem;
 }
 body footer {
   flex-shrink: 0;
@@ -78,19 +79,17 @@ body footer {
 
 .search-container {
   text-align: center;
-  padding: 2rem;
+  padding: 2.5rem;
   background-color: #ecf0f1;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  max-width: 600px;
-  margin: 1rem auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  max-width: 650px;
 }
 .search-container__h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #2c3e50;
   font-family: "Satoshi", sans-serif;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 .search-container__h2 span {
   font-weight: bold;
@@ -108,33 +107,85 @@ body footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 .search-container__form input {
   font-family: "Satoshi", sans-serif;
-  font-size: 14px;
-  padding: 0.5rem 1rem;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
   border: 2px solid #3498db;
-  border-radius: 4px;
+  border-radius: 5px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 .search-container__form input:focus {
   border-color: #f1c40f;
+  box-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
 }
 .search-container__form button {
   font-family: "Satoshi", sans-serif;
-  font-size: 1rem;
-  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+  padding: 0.6rem 2rem;
   background-color: #3498db;
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 .search-container__form button:hover {
   background-color: #f1c40f;
+}
+.search-container__result {
+  font-family: "Satoshi", sans-serif;
+  padding-top: 1rem;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.search-container__result option {
+  font-size: 15px;
+  padding: 12px;
+  font-weight: bold;
+  background-color: #3498db;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+.search-container__result option:hover {
+  background-color: #f1c40f;
+  color: #2c3e50;
+}
+
+.weather-container__h3 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+.weather-container__h3 span {
+  color: #f1c40f;
+}
+.weather-container__result {
+  text-align: center;
+  font-family: "Satoshi", sans-serif;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.weather-container__result option {
+  border: 2px;
+  border-style: solid;
+  font-size: 16px;
+  padding: 15px;
+  font-weight: bold;
+  background-color: #ecf0f1;
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */
