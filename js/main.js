@@ -1,4 +1,5 @@
-const key = "45a1078dcfa9a0cac30ade9573e63587";
+const openWeatherkey = "45a1078dcfa9a0cac30ade9573e63587";
+const ninjaKey = "eEo0kAEU9JvRiBQXi9FVZQ==ICbDTBzCCTt9ztaM";
 
 const form = document.getElementById("search-form");
 const input = document.getElementById("city-input");
@@ -9,7 +10,7 @@ const datalist = document.querySelector(".search-container__result");
 async function getCordinatesByLocationName(city) {
   try {
     const result = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${key}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${openWeatherkey}`
     );
     if (!result.ok) {
       throw new Error("City not found");
@@ -29,7 +30,7 @@ async function getCordinatesByLocationName(city) {
 async function getWeatherLatAndLon(lat, lon) {
   try {
     const result = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherkey}&units=metric`
     );
     if (!result.ok) {
       throw new Error("Error fetching forecast");
@@ -46,7 +47,7 @@ async function getWeatherLatAndLon(lat, lon) {
 async function getCities(city) {
   try {
     const result = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${key}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${openWeatherkey}`
     );
 
     if (!result.ok) {
@@ -161,6 +162,40 @@ function getMaxMinTempByDate(data) {
   return arrTempOfTheDay;
 }
 
+async function suggestions(city) {
+  let options = {
+    method: "GET",
+    headers: { "x-api-key": ninjaKey },
+  };
+  try {
+    const result = await fetch(
+      `https://api.api-ninjas.com/v1/city?name=${city}`,
+      options
+    );
+    if (!result.ok) {
+      throw new Error("City not found");
+    }
+
+    const data = await result.json();
+    const suggestionsList = document.querySelector(
+      ".search-container__form--suggestions-list"
+    );
+    suggestionsList.innerHTML = "";
+    for (item of data) {
+      const option = document.createElement("li");
+      option.innerHTML = `${item.name},${item.country}`;
+
+      option.addEventListener("click", () => {
+        input.value = `${item.name},${item.country}`;
+        suggestionsList.innerHTML = "";
+      });
+
+      suggestionsList.appendChild(option);
+    }
+  } catch (error) {
+    console.error("Error fetching city data:", error);
+  }
+}
 // listener
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -176,6 +211,12 @@ input.addEventListener("input", () => {
     datalist.innerHTML = "";
     const section = document.querySelector(".weather-container");
     section.innerHTML = "";
+    const suggestions = document.querySelector(
+      ".search-container__form--suggestions-list"
+    );
+    suggestions.innerHTML = "";
+  } else {
+    suggestions(input.value);
   }
 });
 window.addEventListener("load", () => {

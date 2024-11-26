@@ -130,6 +130,29 @@ body footer {
   border-color: #f1c40f;
   box-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
 }
+.search-container__form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.search-container__form ul li {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.search-container__form ul li:hover {
+  background-color: #f0f0f0;
+}
 .search-container__form button {
   font-family: "Satoshi", sans-serif;
   font-size: 1.1rem;
