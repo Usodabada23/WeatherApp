@@ -1,11 +1,11 @@
 const openWeatherkey = "45a1078dcfa9a0cac30ade9573e63587";
 const ninjaKey = "eEo0kAEU9JvRiBQXi9FVZQ==ICbDTBzCCTt9ztaM";
-
+const unsplashKey = "yHNHJjy_sBl1Vr285tqf0qGyqZ2W43Y0Jmi5U8kzCF8";
 const form = document.getElementById("search-form");
 const input = document.getElementById("city-input");
 const datalist = document.querySelector(".search-container__result");
 
-//function
+//async fetch function
 
 async function getCordinatesByLocationName(city) {
   try {
@@ -37,13 +37,11 @@ async function getWeatherLatAndLon(lat, lon) {
     }
 
     const data = await result.json();
-    let city = data["name"];
-    displayWeatherResult(data, city);
+    displayWeatherResult(data);
   } catch (error) {
     datalist.innerHTML = `<p>Error: ${error.message}</p>`;
   }
 }
-
 async function getCities(city) {
   try {
     const result = await fetch(
@@ -60,6 +58,54 @@ async function getCities(city) {
     console.error("Error fetching city data:", error);
   }
 }
+async function suggestions(city) {
+  let options = {
+    method: "GET",
+    headers: { "x-api-key": ninjaKey },
+  };
+  try {
+    const result = await fetch(
+      `https://api.api-ninjas.com/v1/city?name=${city}`,
+      options
+    );
+    if (!result.ok) {
+      throw new Error("City not found");
+    }
+
+    const data = await result.json();
+    const suggestionsList = document.querySelector(
+      ".search-container__form--suggestions-list"
+    );
+    suggestionsList.innerHTML = "";
+    for (item of data) {
+      const option = document.createElement("li");
+      option.innerHTML = `${item.name},${item.country}`;
+
+      option.addEventListener("click", () => {
+        input.value = `${item.name},${item.country}`;
+        suggestionsList.innerHTML = "";
+      });
+
+      suggestionsList.appendChild(option);
+    }
+  } catch (error) {
+    console.error("Error fetching city data:", error);
+  }
+}
+async function getImageByCity(city) {
+  try {
+    const result = await fetch(
+      `https://api.unsplash.com/search/photos?query=${city}&client_id=${unsplashKey}`
+    );
+    const data = await result.json();
+    let arrImg = data.results;
+    let rand = Math.floor(Math.random() * 10);
+    let url = arrImg[rand].links.download;
+    displayImgByCity(url, city);
+  } catch (error) {}
+}
+
+// data function
 
 function updateCityList(cities) {
   datalist.innerHTML = "";
@@ -91,7 +137,6 @@ function getDayName(dateString) {
   const dayIndex = date.getDay();
   return daysOfWeek[dayIndex];
 }
-
 function displayWeatherResult(data) {
   let arr = getMaxMinTempByDate(data);
   const section = document.querySelector(".weather-container");
@@ -113,7 +158,6 @@ function displayWeatherResult(data) {
   }
   section.appendChild(tempDatalist);
 }
-
 function getMaxMinTempByDate(data) {
   let temp = data["list"];
   const tempArr = [];
@@ -161,41 +205,22 @@ function getMaxMinTempByDate(data) {
 
   return arrTempOfTheDay;
 }
+function displayImgByCity(url, city) {
+  const main = document.querySelector("main");
+  const imgSection = document.createElement("section");
+  imgSection.classList.add("img-container");
+  main.appendChild(imgSection);
 
-async function suggestions(city) {
-  let options = {
-    method: "GET",
-    headers: { "x-api-key": ninjaKey },
-  };
-  try {
-    const result = await fetch(
-      `https://api.api-ninjas.com/v1/city?name=${city}`,
-      options
-    );
-    if (!result.ok) {
-      throw new Error("City not found");
-    }
-
-    const data = await result.json();
-    const suggestionsList = document.querySelector(
-      ".search-container__form--suggestions-list"
-    );
-    suggestionsList.innerHTML = "";
-    for (item of data) {
-      const option = document.createElement("li");
-      option.innerHTML = `${item.name},${item.country}`;
-
-      option.addEventListener("click", () => {
-        input.value = `${item.name},${item.country}`;
-        suggestionsList.innerHTML = "";
-      });
-
-      suggestionsList.appendChild(option);
-    }
-  } catch (error) {
-    console.error("Error fetching city data:", error);
-  }
+  const img = document.createElement("img");
+  const h4 = document.createElement("h4");
+  h4.classList.add("img-container__h4");
+  h4.innerHTML = `A little picture from ${city}<span>.</span>`;
+  img.classList.add("img-container__img");
+  img.src = `${url}`;
+  imgSection.appendChild(h4);
+  imgSection.appendChild(img);
 }
+
 // listener
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -215,6 +240,10 @@ input.addEventListener("input", () => {
       ".search-container__form--suggestions-list"
     );
     suggestions.innerHTML = "";
+    const imgSection = document.querySelector(".img-container");
+    if (imgSection) {
+      imgSection.remove();
+    }
   } else {
     suggestions(input.value);
   }
@@ -225,6 +254,6 @@ window.addEventListener("load", () => {
 datalist.addEventListener("click", async (e) => {
   let txt = e.target.innerText;
   let arr = txt.split(", ");
-  const coordinates = await getCordinatesByLocationName(arr[0]);
-  console.log(coordinates);
+  await getCordinatesByLocationName(arr[0]);
+  await getImageByCity(arr[0]);
 });
