@@ -4,7 +4,8 @@ const form = document.getElementById("search-form");
 const input = document.getElementById("city-input");
 const datalist = document.getElementById("searchList");
 const home = document.getElementById("home");
-
+const favList = document.getElementById("favList");
+let index = 0;
 //async fetch function
 
 let coordinates = async function getCoordinatesByLocationName(city) {
@@ -85,9 +86,13 @@ let images = async function getImageByCity(city) {
 
     const data = await result.json();
     let arrImg = data.results;
-    let rand = Math.floor(Math.random() * 10);
-    let url = arrImg[rand].links.download;
-    return url;
+    if (arrImg.length > 0) {
+      let rand = Math.floor(Math.random() * 10);
+      let url = arrImg[rand].links.download;
+      return url;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.error("Error fetching picture data:", error);
   }
@@ -207,6 +212,24 @@ function displayImgByCity(url, city) {
   imgSection.appendChild(h4);
   imgSection.appendChild(img);
 }
+function addFavBtn() {
+  const buttonAdd = document.createElement("a");
+  const imgSection = document.getElementById("sectionImg");
+  buttonAdd.classList.add("img-container__button");
+  buttonAdd.id = "addBtn";
+  buttonAdd.innerText = "Add to favorite city";
+  imgSection.appendChild(buttonAdd);
+  return buttonAdd;
+}
+function addToFavList(city) {
+  const ul = document.getElementById("favList");
+  localStorage.setItem(index, city);
+  const li = document.createElement("li");
+  li.innerHTML = localStorage.getItem(index);
+  li.value = index;
+  ul.appendChild(li);
+  index++;
+}
 
 // listeners
 form.addEventListener("submit", async (e) => {
@@ -243,7 +266,7 @@ datalist.addEventListener("click", async (e) => {
   section.innerHTML = "";
   const imgSection = document.getElementById("sectionImg");
   if (imgSection) {
-    imgSection.remove();
+    imgSection.innerHTML = "";
   }
   if (section.innerHTML === "") {
     const coords = await coordinates(arr[0]);
@@ -252,7 +275,6 @@ datalist.addEventListener("click", async (e) => {
     displayWeatherResult(weatherData);
     const h3 = document.getElementById("weatherTitle");
     h3.innerHTML = `Temperature in ${txt}<span>.</span>`;
-
     if (!url) {
       if (imgSection) {
         imgSection.innerHTML = `<p>No picture for ${arr[0]} `;
@@ -260,6 +282,12 @@ datalist.addEventListener("click", async (e) => {
     } else {
       displayImgByCity(url, arr[0]);
     }
+    addFavBtn().addEventListener("click", (e) => {
+      const btnFav = document.getElementById("addBtn");
+      btnFav.innerHTML = "✓";
+      btnFav.style.backgroundColor = "green";
+      addToFavList(txt);
+    });
 
     input.value = txt;
     datalist.innerHTML = "";
@@ -267,4 +295,45 @@ datalist.addEventListener("click", async (e) => {
 });
 home.addEventListener("click", (e) => {
   location.reload(true);
+});
+favList.addEventListener("click", async (e) => {
+  let txt = e.target.innerText; // Texte sélectionné
+  let arr = txt.split(", "); // Diviser pour extraire la ville
+  const section = document.getElementById("weatherResult");
+  const imgSection = document.getElementById("sectionImg");
+
+  // Remplir l'input avec la valeur cliquée
+  input.value = txt;
+
+  // Effacer les sections
+  section.innerHTML = "";
+  if (imgSection) {
+    imgSection.remove();
+  }
+
+  try {
+    // Obtenir les coordonnées et les données météo
+    const coords = await coordinates(arr[0]);
+    const weatherData = await weather(coords.lat, coords.lon);
+    const url = await images(arr[0]);
+
+    // Afficher les données météo
+    displayWeatherResult(weatherData);
+
+    // Mettre à jour le titre
+    const h3 = document.getElementById("weatherTitle");
+    h3.innerHTML = `Temperature in ${txt}<span>.</span>`;
+
+    // Afficher l'image ou un message d'erreur
+    if (url) {
+      displayImgByCity(url, arr[0]);
+    } else {
+      imgSection.innerHTML = `<p>No picture for ${arr[0]}</p>`;
+    }
+
+    // Effacer la liste déroulante
+    datalist.innerHTML = "";
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 });
