@@ -1,5 +1,4 @@
 const openWeatherkey = "45a1078dcfa9a0cac30ade9573e63587";
-const ninjaKey = "eEo0kAEU9JvRiBQXi9FVZQ==ICbDTBzCCTt9ztaM";
 const unsplashKey = "yHNHJjy_sBl1Vr285tqf0qGyqZ2W43Y0Jmi5U8kzCF8";
 const form = document.getElementById("search-form");
 const input = document.getElementById("city-input");
@@ -262,7 +261,7 @@ datalist.addEventListener("click", async (e) => {
       displayImgByCity(url, arr[0]);
     }
 
-    input.value = "";
+    input.value = txt;
     datalist.innerHTML = "";
   }
 });
