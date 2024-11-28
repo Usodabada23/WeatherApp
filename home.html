@@ -10,7 +10,7 @@
   <body>
     <header>
       <nav class="nav-container">
-        <h1 class="nav-container__h1">Wheathy<span>.</span></h1>
+        <h1 class="nav-container__h1" id="home">Wheathy<span>.</span></h1>
         <p class="nav-container__p">weather for every location</p>
       </nav>
     </header>
@@ -21,13 +21,19 @@
           ><span class="span2">.</span><span class="span3">.</span>
         </h2>
         <form class="search-container__form" id="search-form">
-          <input type="text" id="city-input" placeholder="Enter..." required />
-          <ul id="datalist" class="search-container__form--suggestions-list"></ul>
+          <input
+            type="text"
+            id="city-input"
+            placeholder="Enter..."
+            value=""
+            autocomplete="off"
+            required
+          />
           <button type="submit">Search</button>
         </form>
-        <datalist class="search-container__result"></datalist>
+        <datalist class="search-container__result" id="searchList"></datalist>
       </section>
-      <section class="weather-container"></section>
+      <section class="weather-container" id="weatherResult"></section>
     </main>
     <footer>
       <nav class="footer-container">
