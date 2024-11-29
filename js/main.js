@@ -5,6 +5,8 @@ const input = document.getElementById("city-input");
 const datalist = document.getElementById("searchList");
 const home = document.getElementById("home");
 const favList = document.getElementById("favList");
+const initList = document.getElementById("initList");
+const allItems = favList.querySelectorAll("li:not(#initList)");
 let index = 0;
 //async fetch function
 
@@ -227,6 +229,7 @@ function addToFavList(city) {
   const li = document.createElement("li");
   li.innerHTML = localStorage.getItem(index);
   li.value = index;
+  li.style.display = "none";
   ul.appendChild(li);
   index++;
 }
@@ -297,43 +300,43 @@ home.addEventListener("click", (e) => {
   location.reload(true);
 });
 favList.addEventListener("click", async (e) => {
-  let txt = e.target.innerText; // Texte sélectionné
-  let arr = txt.split(", "); // Diviser pour extraire la ville
-  const section = document.getElementById("weatherResult");
-  const imgSection = document.getElementById("sectionImg");
-
-  // Remplir l'input avec la valeur cliquée
-  input.value = txt;
-
-  // Effacer les sections
-  section.innerHTML = "";
-  if (imgSection) {
-    imgSection.remove();
-  }
-
-  try {
-    // Obtenir les coordonnées et les données météo
-    const coords = await coordinates(arr[0]);
-    const weatherData = await weather(coords.lat, coords.lon);
-    const url = await images(arr[0]);
-
-    // Afficher les données météo
-    displayWeatherResult(weatherData);
-
-    // Mettre à jour le titre
-    const h3 = document.getElementById("weatherTitle");
-    h3.innerHTML = `Temperature in ${txt}<span>.</span>`;
-
-    // Afficher l'image ou un message d'erreur
-    if (url) {
-      displayImgByCity(url, arr[0]);
-    } else {
-      imgSection.innerHTML = `<p>No picture for ${arr[0]}</p>`;
+  if (e.target.id != "initList") {
+    let txt = e.target.innerText;
+    let arr = txt.split(", ");
+    const section = document.getElementById("weatherResult");
+    const imgSection = document.getElementById("sectionImg");
+    section.innerHTML = "";
+    if (imgSection) {
+      imgSection.remove();
     }
 
-    // Effacer la liste déroulante
-    datalist.innerHTML = "";
-  } catch (error) {
-    console.error("An error occurred:", error);
+    try {
+      const coords = await coordinates(arr[0]);
+      const weatherData = await weather(coords.lat, coords.lon);
+      const url = await images(arr[0]);
+      displayWeatherResult(weatherData);
+      const h3 = document.getElementById("weatherTitle");
+      h3.innerHTML = `Temperature in ${txt}<span>.</span>`;
+      if (url) {
+        displayImgByCity(url, arr[0]);
+      } else {
+        imgSection.innerHTML = `<p>No picture for ${arr[0]}</p>`;
+      }
+      datalist.innerHTML = "";
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   }
+});
+
+initList.addEventListener("click", () => {
+  const allItems = favList.querySelectorAll("li:not(#initList)");
+
+  allItems.forEach((item) => {
+    if (item.style.display === "none") {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
 });

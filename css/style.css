@@ -34,7 +34,8 @@
 }
 .nav-container__list {
   display: flex;
-  margin-left: auto;
+  position: absolute;
+  right: 12%;
   font-family: "Satoshi", sans-serif;
   list-style-type: none;
   font-weight: 700;

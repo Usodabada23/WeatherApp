@@ -35,7 +35,10 @@
   }
   &__list {
     display: flex;
-    margin-left: auto;
+    position: absolute; // Rend la liste indépendante de la taille du conteneur
+    //top: 100%; // Place la liste sous la barre de navigation
+    right: 12%;
+    
     font-family: variables.$main-typo;
     list-style-type: none;
     font-weight: 700;
