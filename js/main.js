@@ -328,7 +328,6 @@ favList.addEventListener("click", async (e) => {
     }
   }
 });
-
 initList.addEventListener("click", () => {
   const allItems = favList.querySelectorAll("li:not(#initList)");
 
