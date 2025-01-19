@@ -1,5 +1,6 @@
 # The Weather Application
 
+## The Challenge 
 - Repository: `weather-app`
 - Type of Challenge: `Consolidation`
 - Duration: `4 days`
@@ -37,9 +38,7 @@ Enough is enough, you decide to build a small web application for them so that y
 - Use the API of https://unsplash.com/ to show a photo of the city they entered in the form. | Done
 - Display a line graph of temperature over time using a library such as [Chart.js](https://www.chartjs.org)
 
-### Instructions
+## Link to see the result 
+-> https://weather-app-8gle.vercel.app/
 
-- Create an account on [OpenWeather](https://home.openweathermap.org/), and generate a key
-- Get the weather data using the native JS [`fetch()`](https://devdocs.io/dom/fetch_api/using_fetch) method.
 
-![](./american-storm.gif)
